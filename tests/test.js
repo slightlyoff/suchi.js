@@ -1,0 +1,1 @@
+load("../src/suchi.js")
