@@ -41,10 +41,10 @@
    */
   suchi.laggards = {
     // IE 8:     26%
-    IE80: /^Mozilla\/5\.0 \(compatible; MSIE 8\.0; Windows NT \d\.\d(.*)\)$/g,
+    IE80: /^Mozilla\/4\.0 \(compatible; MSIE 8\.0; Windows NT \d\.\d(.*)\)$/g,
 
     // IE 7:      4%
-    IE70: /^Mozilla\/4\.0 \(compatible; MSIE 8\.0; Windows NT \d\.\d(.*)\)$/g,
+    IE70: /^Mozilla\/4\.0 \(compatible; MSIE 7\.0; Windows NT \d\.\d(.*)\)$/g,
 
     // IE 6:      7%
     IE60: /^Mozilla\/4\.0 \(compatible; MSIE 6\.0; Windows NT \d\.\d(.*)\)$/g,
@@ -56,7 +56,7 @@
     // Chrome 17: 2%
     // Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.66 Safari/535.11
     // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.66 Safari/535.11
-    CR17: /^Mozilla\/5\.0 \((Windows NT|Macintosh); (.*)\) AppleWebKit\/535\.11 \(KHTML, like Gecko\) Chrome\/17\.0\.\d{3}\.\d{1,2} Safari\/535\.11$/g,
+    CR17: /^Mozilla\/5\.0 \((Windows NT|Macintosh)(;)?( .*)\) AppleWebKit\/535\.11 \(KHTML, like Gecko\) Chrome\/17\.0\.\d{3}\.\d{1,2} Safari\/535\.11$/g,
 
     // FF 10:     1%
     // Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:10.0) Gecko/20100101 Firefox/10.0
