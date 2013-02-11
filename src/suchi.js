@@ -1,7 +1,7 @@
 /**
  * @preserve
  *
- * Suchi.js -- No browser left behind.
+ * Suchi.js -- No user left behind.
  *
  * Copyright 2012:
  *      Alex Russell <slightlyoff@chromium.org>
@@ -63,6 +63,41 @@
     FF10: /^Mozilla\/5\.0 \((Windows NT|Macintosh); (.*)rv\:10\.0(\.\d{1,2})?\) Gecko\/\d{8} Firefox\/10\.0(\.\d{1,2})?$/g,
     // FF 11: (no stats yet, but for good measure)
     FF11: /^Mozilla\/5\.0 \((Windows NT|Macintosh); (.*)rv\:11\.0(\.\d{1,2})?\) Gecko\/\d{8} Firefox\/11\.0(\.\d{1,2})?$/g
+  };
+
+  var CHROME = "CHROME",
+      GCF    = "GCF",
+      FF     = "FF",
+      SAFARI = "SAFARI",
+      IE     = "IE";
+
+  suchi.options = {
+    IE80: {
+      "xp":    [     CHROME, FF, SAFARI, GCF ],
+      "vista": [ IE, CHROME, FF, SAFARI, GCF ],
+      "win7":  [ IE, CHROME, FF, SAFARI, GCF ]
+    },
+    IE70: {
+      "xp":    [     CHROME, FF, SAFARI, GCF ],
+      "vista": [ IE, CHROME, FF, SAFARI, GCF ]
+    },
+    IE60: {
+      "xp":    [     CHROME, FF, SAFARI, GCF ]
+    }
+  };
+
+  var portable = [ "FF36", "CR17", "FF10", "FF11" ];
+  for(var x = 0; x < portable.length; x++) {
+    suchi.options[portable[x]] = {
+      "xp":    [     CHROME, FF, SAFARI ],
+      "vista": [ IE, CHROME, FF, SAFARI ],
+      "win7":  [ IE, CHROME, FF, SAFARI ],
+      "osx":   [     CHROME, FF, SAFARI ]
+    };
+  }
+
+  suchi.prompts = {
+
   };
 
   /**
