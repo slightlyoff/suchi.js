@@ -1,5 +1,4 @@
 (function() {
-
 "use strict";
 
 var CR18_VISTA = "Mozilla/5.0 (Windows NT 6.0; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.45 Safari/535.19";
@@ -12,12 +11,12 @@ var current = [
   // Chrome 18
   CR18_VISTA,
   CR18_OSX,
-  
+
   // IE 9
   IE9_WIN7,
   IE9_WIN72,
   IE9_WIN7_GCF
-  
+
   // FIXME: FF12, Safari 5.1, etc.
 ];
 
