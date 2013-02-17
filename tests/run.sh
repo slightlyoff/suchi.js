@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2012:
+# Copyright 2013:
 #      Alex Russell <slightlyoff@chromium.org>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
