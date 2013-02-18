@@ -73,9 +73,42 @@ below for hooks that allow you to control when and how Suchi sets cookies.
 
 # What Users Will Be Prompted By Default?
 
-As of Spring 2013, users of the following browsers are considered "left behind"
+As of Spring 2013, users of the following desktop browsers are considered "left
+behind" and dangerous enough (in terms of market share) to warrant a gentle
+nudge in the right direction:
 
-# Why are IE9, Firefox 3.6, and Safari for Windows In That List?
+  * IE 6-9
+  * Firefox 3.6
+  * Safari for Windows (all versions)
+  * Chrome 23
+
+Mobile browsers that need the nudge are:
+
+  * iOS Safari 5.1
+  * Android Browser (all versions)
+
+# Why are IE9, Firefox 3.6, and Safari/Win On That List?
+
+Aren't they sort of modern?
+
+Perhaps in terms of absolute vintage, yes, but the biggest determinant of how
+much of a pollutant a popular browser will become is how long it lives on after
+its replacement is released.
+
+Said another way, when Browser X Version 18 is released, how long, on average,
+do we all have to wait until all the users of Version 17 are either upgraded or
+moved onto a competing (auto-updating) browser? How long until 90% of those
+users are upgraded? _*That*_ is our key metric for browser progress, and recent
+experience shows that it's a more telling indicator of overall improvements than
+any other point-feature improvement.
+
+Think about what has gone down over the past couple of years in JS performance:
+sure, some browsers might have been slower in one release than their
+competitors, but to a one they all caught up in the next release. Indeed, the
+only reason we can't all assume JIT'd JS performance as our baseline today is
+because the replacement rates amongst some of those browsers has been incredibly
+low. Their latest versions might be great, but it's not helping us, practically
+speaking.
 
 # Wait...I Read "UA Testing" Back There...
 
