@@ -21,7 +21,11 @@ message.
 <div id="promptId"></div>
 <script>
   var suchiConfig = suchiConfig || [];
-  suchiConfig.push({"promptAt": "promptId"});
+  suchiConfig.push({
+    onlagging: function() {
+      // Callback that's fired when Suchi detects as
+    }
+  });
 
   (function() {
     var se = document.createElement("script");
@@ -145,3 +149,54 @@ reasons:
 # Configuration Options
 
 TODOC
+```html
+<div id="promptId"></div>
+<script>
+  var suchiConfig = suchiConfig || [];
+  suchiConfig.push({
+    //
+    // Basic configuration
+    //
+
+    // NOTIMPLEMENTED
+    treatGCFAsLagging: true, // Detect IE with GCF installed as lagging
+    // NOTIMPLEMENTED
+    onlagging: function() {
+      // Callback that's fired when Suchi detects as
+    },
+
+    //
+    // Prompt configuration
+    //
+
+    // NOTIMPLEMENTED
+    // By default, only the detection script is loaded, not the resources needed
+    // to prompt. Set this to true to load localized prompt UI.
+    prompt: true,
+    // NOTIMPLEMENTED
+    // Localized prompt languages to use in order of preference.
+    promptLocales: ["en-GB", "en-US", "en" /*...*/ ],
+    // NOTIMPLEMENTED
+    promptAt: "promptId", // id of the element to put the prompt in
+    // NOTIMPLEMENTED
+    allowCookies: false,
+    // NOTIMPLEMENTED
+    pageviewsTillPrompt: 0, // Always prompt
+    // NOTIMPLEMENTED
+    rePromptDelay: 4 // Days to wait before re-prompting after dismissal
+  });
+
+  // Asynchronously load suchi.js
+  (function(src) {
+    var se = document.createElement("script");
+    se.async = true;
+    se.src = src;
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(se, s);
+  })(
+    // If using a custom build, replace this with the location of your suchi.js
+    "//suchijs.org/suchi.js"
+  );
+</script>
+```
+
