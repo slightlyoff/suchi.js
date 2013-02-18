@@ -35,6 +35,11 @@ var CR18_OSX = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.1
 var CR17_XP = "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.66 Safari/535.11";
 var CR17_OSX = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.66 Safari/535.11";
 
+// FF 3.6
+var FF36_OSX = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6;en-US; rv:1.9.2.9) Gecko/20100824 Firefox/3.6.9";
+var FF36_WIN7_crufty = "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.2.8) Gecko/20100722 Firefox/3.6.8 ( .NET CLR 3.5.30729; .NET4.0C)";
+var FF36_VISTA = "Mozilla/5.0 (Windows; U; Windows NT 6.0; fr; rv:1.9.2.28) Gecko/20120306 Firefox/3.6.28";
+
 // IE 10
 var IE10_generic = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)";
 var IE10_WIN8 = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; Touch)";
@@ -89,6 +94,14 @@ var laggards = [
   CR17_XP,
   CR18_OSX,
 
+  // FF 4.0
+  // TODO
+
+  // FF 3.6
+  FF36_OSX,
+  FF36_WIN7_crufty,
+  FF36_VISTA,
+
   // IE 9
   IE9_WIN7,
   IE9_WIN72,
@@ -118,11 +131,11 @@ var laggards = [
 ];
 
 current.forEach(function(c) {
-  doh.add("User Agent", "t.f(suchi.isBehind(\n\t\"" + c + "\"));");
+  doh.add("User Agent", "t.f(suchi.isBehind(\n  \"" + c + "\"\n));");
 });
 
 laggards.forEach(function(c) {
-  doh.add("User Agent", "t.t(suchi.isBehind(\n\t\"" + c + "\"));");
+  doh.add("User Agent", "t.t(suchi.isBehind(\n  \"" + c + "\"\n));");
 });
 
 doh.add("User Agent", [

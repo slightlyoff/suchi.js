@@ -2,7 +2,7 @@
 
 Become part of the solution.
 
-[TOC]
+[toc]
 
 # What's All This Then?
 
@@ -74,26 +74,27 @@ below for hooks that allow you to control when and how Suchi sets cookies.
 # What Users Will Be Prompted By Default?
 
 As of Spring 2013, users of the following desktop browsers are considered "left
-behind" and dangerous enough (in terms of market share) to warrant a gentle
-nudge in the right direction:
+behind" and dangerous enough (in terms of [market reach](http://goo.gl/nO6mG))
+to warrant a gentle nudge in the right direction:
 
   * IE 6-9
-  * Firefox 3.6
-  * Safari for Windows (all versions)
-  * Chrome 23
+  * Firefox 3.6, 9-16
+  * Safari for Windows (all versions, and 5.1 in particular)
+  * Chrome 16-23
 
 Mobile browsers that need the nudge are:
 
-  * iOS Safari 5.1
+  * iOS Safari 5.0-5.1
   * Android Browser (all versions)
 
-# Why are IE9, Firefox 3.6, and Safari/Win On That List?
+# Why are IE8, IE9, Firefox 3.6, and Safari 5.1 On That List?
 
-Aren't they sort of modern?
+Aren't they sort of modern? Or at least the most modern you can get on some
+versions of the OSes they run on?
 
-Perhaps in terms of absolute vintage, yes, but the biggest determinant of how
-much of a pollutant a popular browser will become is how long it lives on after
-its replacement is released.
+Perhaps in terms of absolute vintage, yes they're "modern", but the biggest
+determinant of how much of a pollutant a popular browser will become is how long
+it lives on after its replacement is released.
 
 Said another way, when Browser X Version 18 is released, how long, on average,
 do we all have to wait until all the users of Version 17 are either upgraded or
@@ -109,6 +110,12 @@ only reason we can't all assume JIT'd JS performance as our baseline today is
 because the replacement rates amongst some of those browsers has been incredibly
 low. Their latest versions might be great, but it's not helping us, practically
 speaking.
+
+So back to those browsers...why are some relatively modern browsers getting
+prompted? Because they're dead-browsers-walking. They've been replaced, they
+just don't know it yet. Suchi is here to help speed their journey from "legacy"
+to "museum piece", recommending browsers that auto-update so those users will
+never be left-behind again.
 
 # Wait...I Read "UA Testing" Back There...
 

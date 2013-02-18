@@ -60,7 +60,7 @@
 
     // FF 3.6:    X%
     // Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6;en-US; rv:1.9.2.9) Gecko/20100824 Firefox/3.6.9
-    FF36: /^Mozilla\/5\.0 \((Windows NT|Macintosh); U;(.*)rv\:1\.9\.2.(\d{1,2})\)( Gecko\/(\d{8}))? Firefox\/3\.6(\.\d{1,2})?( \(.+\))?$/g,
+    FF36: /^Mozilla\/5\.0 \((Windows|Macintosh); U;(.*)rv\:1\.9\.2.(\d{1,2})\)( Gecko\/(\d{8}))? Firefox\/3\.6(\.\d{1,2})?( \(.+\))?$/g,
 
     // Chrome 18: X%
     CR18: /^Mozilla\/5\.0 \((Windows NT|Macintosh)(;)?( .*)\) AppleWebKit\/535\.19 \(KHTML, like Gecko\) Chrome\/18\.0\.\d{4}\.\d{1,2} Safari\/535\.19$/g,
