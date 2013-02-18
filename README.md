@@ -29,13 +29,13 @@ message.
     }
   });
 
-  (function() {
+  (function(src) {
     var se = document.createElement("script");
     se.async = true;
-    se.src = "//suchijs.org/suchi.js";
+    se.src = src;
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(se, s);
-  })();
+  })("//suchijs.org/suchi.js");
 </script>
 ```
 
@@ -162,7 +162,11 @@ reasons:
     treatGCFAsLagging: true, // Detect IE with GCF installed as lagging
     // NOTIMPLEMENTED
     onlagging: function() {
-      // Callback that's fired when Suchi detects as
+      // Callback that's fired when Suchi finds the current browser is wanting
+    },
+    // NOTIMPLEMENTED
+    onload: function() {
+      // Called when suchi.js loads and finishes processing options.
     },
 
     //

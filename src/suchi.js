@@ -90,8 +90,9 @@
       IE     = "IE",
       OPERA  = "OPERA";
 
-  suchi.options = {
+  suchi.evergreenOptions = {
     IE9: {
+      // IE 9 never shipped on XP. More's the pitty.
       "vista": [     CHROME, FF, GCF, OPERA ],
       "win7":  [ IE, CHROME, FF, GCF, OPERA ]
     },
@@ -103,8 +104,10 @@
     IE7: {
       "xp":    [     CHROME, FF, GCF, OPERA ],
       "vista": [ IE, CHROME, FF, GCF, OPERA ]
+      // Vista was the last OS supported for IE7
     },
     IE6: {
+      // Not bothering with 2K or 2K3
       "xp":    [     CHROME, FF, GCF, OPERA ]
     }
     // FIXME: need to add mobile dead-ends/options here!
@@ -116,13 +119,11 @@
     //  Opera
     //  Chrome (For ICS+ Android users)
     //  FF: for ARMv7+ devices (see: http://goo.gl/PhQs9)
-    // Inclusive-design mobile browsers (no hope, just fallbacks):
-    //
   };
 
-  var portable = [ "FF36", "CR18", "CR17", "FF10", "FF11" ];
+  var portable = [ "FF36", "CR_recent", "FF_recent" ];
   for(var x = 0; x < portable.length; x++) {
-    suchi.options[portable[x]] = {
+    suchi.evergreenOptions[portable[x]] = {
       "xp":    [     CHROME, FF, OPERA ],
       "vista": [ IE, CHROME, FF, OPERA ],
       "win7":  [ IE, CHROME, FF, OPERA ],
@@ -130,9 +131,11 @@
     };
   }
 
+  /*
   suchi.prompts = {
 
   };
+  */
 
   /**
    * Tests a string to see if it matches one of the current most frequently
@@ -151,15 +154,72 @@
     return false;
   };
 
+  var isArray = function(o) {
+    return Object.prototype.toString.call(o) == "[object Array]";
+  };
+
   var ua = (global.navigator) ? global.navigator.userAgent : "";
+
+  // Handle configuration.
+  var defaultOptionList = {
+    treatGCFAsLagging: false,
+    onlagging: [],
+    onload: [],
+    prompt: false,
+    promptLocales: [], // FIXME: default locale?
+    promptAt: "",
+    allowCookies: true,
+    pageviewsTillPrompt: 3,
+    rePromptDelay: 4
+  };
+
+  suchi._parseOptions = function(optionsList, defaults) {
+    // Merge all of the options based on a prototype of the supported options
+    // Make an options object that treats "defaults" as its prototype. My
+    // kingdom for __proto__!
+    var OC = function() {};
+    OC.prototype = defaults;
+    var options = new OC();
+
+    for (var x = 0; x < optionsList.length; x++) {
+      (function(os) {
+        for (var name in os) {
+          (function(default_v, default_t, value, value_t) {
+            if (default_t == "undefined") {
+              return;
+            }
+
+            if ((default_t == "boolean" && value_t == "boolean") ||
+                (default_t == "string"  && value_t == "string")) {
+              options[name] = value;
+              return;
+            }
+            if (isArray(default_v) && isArray(value)) {
+              options[name] = options[name].concat(value);
+              return;
+            }
+
+          })(defaults[name],
+             typeof defaults[name],
+             os[name],
+             typeof os[name]);
+        }
+
+      })(optionsList[x]);
+    }
+
+    return options;
+  };
+
+  var options = suchi._parseOptions(global["suchiOptions"] || [],
+                                    defaultOptionList);
 
   // TODO(slightlyoff):
   //  * attach to load event and place the promo
   //  * parse and respect the config
   //  * i18n infrastructure
 
-  // TODO(slightlyoff):
-  // Determine our current locale, if possible. If not, grab it from the
-  // configuration. If all else fails, fall back to en-GB.
+  // TODO(slightlyoff): Determine our current locale!
+
 
 })(this);

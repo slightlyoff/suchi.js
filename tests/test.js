@@ -24,4 +24,5 @@ load("console.js");
 load("../util/doh/runner.js");
 load("../src/suchi.js");
 load("ua-tests.js");
+load("settings-tests.js");
 doh.run();

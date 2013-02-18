@@ -167,12 +167,14 @@ laggards.forEach(function(c) {
   doh.add("User Agent", "t.t(suchi.isBehind(\n  \"" + c + "\"\n));");
 });
 
+/*
 doh.add("User Agent", [
 
   function options(t) {
   },
 
 ]);
+*/
 
 })();
 
