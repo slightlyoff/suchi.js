@@ -39,14 +39,13 @@ message.
 
 # How Does It Work?
 
-Suchi [does tight-fit UA testing](http://infrequently.org/2011/02/on-
-performance-innumeracy-false-positives/) to determine if a user is visting your
-site with one of the worst-offending legacy browsers; i.e., a non-auto-updating
-browser with relatively high market share. Users on up-to-date Evergreen
-browsers will never be prompted, while users who are on dead-end browser (e.g.,
-IE 8 for XP, Safari for Windows, or the legacy Android Browser) will be
-presented with choices that enable them to move to a better, auto-updating
-world.
+Suchi [does tight-fit UA testing](http://goo.gl/hJ98J) to determine if a user is
+visting your site with one of the worst-offending legacy browsers; i.e., a non-
+auto-updating browser with relatively high market share. Users on up-to-date
+Evergreen browsers will never be prompted, while users who are on dead-end
+browser (e.g., IE 8 for XP, Safari for Windows, or the legacy Android Browser)
+will be presented with choices that enable them to move to a better, auto-
+updating world.
 
 Future versions will optionally present users of OSes for which there are _no_
 Evergreen options with information on how to update to a modern OS.
