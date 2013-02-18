@@ -148,7 +148,6 @@ reasons:
 
 # Configuration Options
 
-TODOC
 ```html
 <div id="promptId"></div>
 <script>
@@ -194,7 +193,8 @@ TODOC
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(se, s);
   })(
-    // If using a custom build, replace this with the location of your suchi.js
+    // If using a custom build or your own CDN, replace this with the location
+    // of your copy of suchi.js
     "//suchijs.org/suchi.js"
   );
 </script>

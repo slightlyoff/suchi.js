@@ -33,47 +33,44 @@
    * reported by:
    *  http://marketshare.hitslink.com/browser-market-share.aspx?qprid=2&qpcustomd=0
    *
-   * This list will be actively maintained. I.e., as IE 10 is launched, IE 9
-   * goes into the list; when Chrome 19 goes to stable, Chrome 18 goes in the
+   * This list will be actively maintained. I.e., as IE 11 is launched, IE 10
+   * goes into the list; when Chrome 25 goes to stable, Chrome 24 goes in the
    * list, etc.
    *
-   * Browsers are removed from the list as they fall below 1% global share.
+   * Browsers are usually removed from the list as they fall below 1% reach.
+   *
+   * Note that there's some OS bias in the regexes below. E.g., Linux isn't
+   * well-detected. This is sort of a bug, but largely a reflection of it's lack
+   * of userbase at the time of writing.
    */
   suchi.laggards = {
-
-    // IE 9:     XX%
+    // IE 9:     17%
     // Mozilla/5.0 (Windows; U; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)
     // IE9: /^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d(.*); Trident\/5\.0(.*)\)$/g,
     IE9: /^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d(.*)\)$/g,
 
-    // IE 8:     XX%
+    // IE 8:     11%
     // IE8: /^Mozilla\/4\.0 \(compatible; MSIE 8\.0; Windows NT \d\.\d;(.*)? Trident\/4\.0(;)?(.*)\)$/g,
     IE8: /^Mozilla\/4\.0 \(compatible; MSIE 8\.0; Windows NT \d\.\d(.*)\)$/g,
 
-    // IE 7:      X%
+    // IE 7:      ?%
     // FIXME: test for Trident version #
     IE7: /^Mozilla\/4\.0 \(compatible; MSIE 7\.0; Windows NT \d\.\d(.*)\)$/g,
 
-    // IE 6:      X%
+    // IE 6:      ?%
     // FIXME: test for Trident version #
     IE6: /^Mozilla\/4\.0 \(compatible; MSIE 6\.0; Windows NT \d\.\d(.*)\)$/g,
 
-    // FF 3.6:    X%
+    // FF 3.6:    0.X%
     // Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6;en-US; rv:1.9.2.9) Gecko/20100824 Firefox/3.6.9
     FF36: /^Mozilla\/5\.0 \((Windows|Macintosh); U;(.*)rv\:1\.9\.2.(\d{1,2})\)( Gecko\/(\d{8}))? Firefox\/3\.6(\.\d{1,2})?( \(.+\))?$/g,
 
-    // Chrome 18: X%
-    CR18: /^Mozilla\/5\.0 \((Windows NT|Macintosh)(;)?( .*)\) AppleWebKit\/535\.19 \(KHTML, like Gecko\) Chrome\/18\.0\.\d{4}\.\d{1,2} Safari\/535\.19$/g,
-    // Chrome 17: X%
-    // Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.66 Safari/535.11
-    // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.66 Safari/535.11
-    CR17: /^Mozilla\/5\.0 \((Windows NT|Macintosh)(;)?( .*)\) AppleWebKit\/535\.11 \(KHTML, like Gecko\) Chrome\/17\.0\.\d{3}\.\d{1,2} Safari\/535\.11$/g,
+    // Chrome 16-23: ~1.2%
+    CR_recent: /^Mozilla\/5\.0 \((Windows NT|Macintosh)(;)?( .*)\) AppleWebKit\/53\d\.\d{1,2} \(KHTML, like Gecko\) Chrome\/(16|17|18|19|20|21|22|23)\.0\.\d{3,4}\.\d{1,2} Safari\/53\d\.\d{1,2}$/g,
 
-    // FF 10:     X%
-    // Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:10.0) Gecko/20100101 Firefox/10.0
-    FF10: /^Mozilla\/5\.0 \((Windows NT|Macintosh); (.*)rv\:10\.0(\.\d{1,2})?\) Gecko\/\d{8} Firefox\/10\.0(\.\d{1,2})?$/g,
-    // FF 11: (no stats yet, but for good measure)
-    FF11: /^Mozilla\/5\.0 \((Windows NT|Macintosh); (.*)rv\:11\.0(\.\d{1,2})?\) Gecko\/\d{8} Firefox\/11\.0(\.\d{1,2})?$/g
+    // FF 9-16:  ~3.7%
+    // Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:16.0) Gecko/20100101 Firefox/16.0
+    FF_recent: /^Mozilla\/5\.0 \((Windows NT \d\.\d|Macintosh); (.*)rv\:(9|10|11|12|13|14|15|16)\.0(\.\d{1,2})?\) Gecko\/\d{8} Firefox\/(9|10|11|12|13|14|15|16)\.0(\.\d{1,2})?$/g
 
     // FIXME(slightlyoff): need to add mobile laggads, but we need to
     // differentiate by OS in order to offer cogent choices
