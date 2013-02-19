@@ -3,7 +3,7 @@
  *
  * Suchi.js -- No user left behind.
  *
- * Copyright 2012:
+ * Copyright 2012-2013:
  *      Alex Russell <slightlyoff@chromium.org>
  *      Frances Berriman <phaeness@gmail.com>
  *
@@ -21,111 +21,128 @@
  */
 
 (function(global) {
-  // Somebody's already on it. Bail.
-  if (typeof global["suchi"] != "undefined") { return; }
+  var suchi = global.suchi = global.suchi || {};
 
-  var suchi = global.suchi = {};
-
-  /*
-   * There is no feature test for staleness.
-   * 
-   * Tight regular expressions to test for the most prevalant stale browsers as
-   * reported by:
-   *  http://marketshare.hitslink.com/browser-market-share.aspx?qprid=2&qpcustomd=0
-   *
-   * This list will be actively maintained. I.e., as IE 10 is launched, IE 9
-   * goes into the list; when Chrome 19 goes to stable, Chrome 18 goes in the
-   * list, etc.
-   *
-   * Browsers are removed from the list as they fall below 1% global share.
-   */
-  suchi.laggards = {
-    // IE 8:     26%
-    IE80: /^Mozilla\/4\.0 \(compatible; MSIE 8\.0; Windows NT \d\.\d(.*)\)$/g,
-
-    // IE 7:      4%
-    IE70: /^Mozilla\/4\.0 \(compatible; MSIE 7\.0; Windows NT \d\.\d(.*)\)$/g,
-
-    // IE 6:      7%
-    IE60: /^Mozilla\/4\.0 \(compatible; MSIE 6\.0; Windows NT \d\.\d(.*)\)$/g,
-    
-    // FF 3.6:    2%
-    // Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6;en-US; rv:1.9.2.9) Gecko/20100824 Firefox/3.6.9
-    FF36: /^Mozilla\/5\.0 \((Windows NT|Macintosh); U;(.*)rv\:1\.9\.2.(\d{1,2})\)( Gecko\/(\d{8}))? Firefox\/3\.6(\.\d{1,2})?( \(.+\))?$/g,
-
-    // Chrome 17: 2%
-    // Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.66 Safari/535.11
-    // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.66 Safari/535.11
-    CR17: /^Mozilla\/5\.0 \((Windows NT|Macintosh)(;)?( .*)\) AppleWebKit\/535\.11 \(KHTML, like Gecko\) Chrome\/17\.0\.\d{3}\.\d{1,2} Safari\/535\.11$/g,
-
-    // FF 10:     1%
-    // Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:10.0) Gecko/20100101 Firefox/10.0
-    FF10: /^Mozilla\/5\.0 \((Windows NT|Macintosh); (.*)rv\:10\.0(\.\d{1,2})?\) Gecko\/\d{8} Firefox\/10\.0(\.\d{1,2})?$/g,
-    // FF 11: (no stats yet, but for good measure)
-    FF11: /^Mozilla\/5\.0 \((Windows NT|Macintosh); (.*)rv\:11\.0(\.\d{1,2})?\) Gecko\/\d{8} Firefox\/11\.0(\.\d{1,2})?$/g
-  };
+  // FIXME: assert here that suchi.isOld exists!
 
   var CHROME = "CHROME",
       GCF    = "GCF",
       FF     = "FF",
       SAFARI = "SAFARI",
-      IE     = "IE";
+      IE     = "IE",
+      OPERA  = "OPERA";
 
-  suchi.options = {
-    IE80: {
-      "xp":    [     CHROME, FF, SAFARI, GCF ],
-      "vista": [ IE, CHROME, FF, SAFARI, GCF ],
-      "win7":  [ IE, CHROME, FF, SAFARI, GCF ]
+  suchi.evergreenOptions = {
+    IE9: {
+      // IE 9 never shipped on XP. More's the pitty.
+      "vista": [     CHROME, FF, GCF, OPERA ],
+      "win7":  [ IE, CHROME, FF, GCF, OPERA ]
     },
-    IE70: {
-      "xp":    [     CHROME, FF, SAFARI, GCF ],
-      "vista": [ IE, CHROME, FF, SAFARI, GCF ]
+    IE8: {
+      "xp":    [     CHROME, FF, GCF, OPERA ],
+      "vista": [ IE, CHROME, FF, GCF, OPERA ],
+      "win7":  [ IE, CHROME, FF, GCF, OPERA ]
     },
-    IE60: {
-      "xp":    [     CHROME, FF, SAFARI, GCF ]
+    IE7: {
+      "xp":    [     CHROME, FF, GCF, OPERA ],
+      "vista": [ IE, CHROME, FF, GCF, OPERA ]
+      // Vista was the last OS supported for IE7
+    },
+    IE6: {
+      // Not bothering with 2K or 2K3
+      "xp":    [     CHROME, FF, GCF, OPERA ]
     }
+    // FIXME: need to add mobile dead-ends/options here!
+    // Mobile dead-enders that we care about:
+    //  Android Browser
+    //  Safari on devices that won't get updates
+    //    - only evergreen iOS option is a proxy-browser, e.g. Opera Mini
+    // Mobile evergreen options:
+    //  Opera
+    //  Chrome (For ICS+ Android users)
+    //  FF: for ARMv7+ devices (see: http://goo.gl/PhQs9)
   };
 
-  var portable = [ "FF36", "CR17", "FF10", "FF11" ];
+  var portable = [ "FF36", "CR_recent", "FF_recent" ];
   for(var x = 0; x < portable.length; x++) {
-    suchi.options[portable[x]] = {
-      "xp":    [     CHROME, FF, SAFARI ],
-      "vista": [ IE, CHROME, FF, SAFARI ],
-      "win7":  [ IE, CHROME, FF, SAFARI ],
-      "osx":   [     CHROME, FF, SAFARI ]
+    suchi.evergreenOptions[portable[x]] = {
+      "xp":    [     CHROME, FF, OPERA ],
+      "vista": [ IE, CHROME, FF, OPERA ],
+      "win7":  [ IE, CHROME, FF, OPERA ],
+      "osx":   [     CHROME, FF, OPERA ]
     };
   }
 
+  /*
   suchi.prompts = {
 
   };
+  */
 
-  /**
-   * Tests a string to see if it matches one of the current most frequently
-   * used "left behind" browsers.
-   * @param {string} ua The UA String to test.
-   * @return {boolean}
-   */
-  suchi.isBehind = function(ua) {
-    if (typeof ua != "string") { return false; }
-
-    for (var x in this.laggards) {
-      if (ua.match(this.laggards[x])) {
-        return true;
-      }
-    }
-    return false;
+  var isArray = function(o) {
+    return Object.prototype.toString.call(o) == "[object Array]";
   };
 
   var ua = (global.navigator) ? global.navigator.userAgent : "";
+
+  // Handle configuration.
+  var defaultOptionList = {
+    treatGCFAsLagging: false,
+    onlagging: [],
+    onload: [],
+    prompt: false,
+    promptLocales: [], // FIXME: default locale?
+    promptAt: "",
+    allowCookies: true,
+    pageviewsTillPrompt: 3,
+    rePromptDelay: 4
+  };
+
+  suchi._parseOptions = function(optionsList, defaults) {
+    // Merge all of the options based on a prototype of the supported options
+    // Make an options object that treats "defaults" as its prototype. My
+    // kingdom for __proto__!
+    var OC = function() {};
+    OC.prototype = defaults;
+    var options = new OC();
+
+    for (var x = 0; x < optionsList.length; x++) {
+      (function(os) {
+        for (var name in os) {
+          (function(default_v, default_t, value, value_t) {
+            if (default_t == "undefined") {
+              return;
+            }
+
+            if ((default_t == "boolean" && value_t == "boolean") ||
+                (default_t == "string"  && value_t == "string")) {
+              options[name] = value;
+              return;
+            }
+            if (isArray(default_v) && isArray(value)) {
+              options[name] = options[name].concat(value);
+              return;
+            }
+
+          })(defaults[name],
+             typeof defaults[name],
+             os[name],
+             typeof os[name]);
+        }
+
+      })(optionsList[x]);
+    }
+
+    return options;
+  };
+
+  var options = suchi._parseOptions(global["suchiOptions"] || [],
+                                    defaultOptionList);
 
   // TODO(slightlyoff):
   //  * attach to load event and place the promo
   //  * parse and respect the config
   //  * i18n infrastructure
 
-  // TODO(slightlyoff):
-  // Determine our current locale, if possible. If not, grab it from the
-  // configuration. If all else fails, fall back to en-GB.
-
+  // TODO(slightlyoff): Determine our current locale!
 })(this);

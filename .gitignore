@@ -1,0 +1,8 @@
+.d8_history
+v8.log
+tmp
+.svn
+*.swp
+.DS_Store
+*.sublime-project
+*.sublime-workspace
