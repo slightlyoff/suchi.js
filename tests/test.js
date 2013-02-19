@@ -22,6 +22,7 @@
 
 load("console.js");
 load("../util/doh/runner.js");
+load("../src/isOld.js");
 load("../src/suchi.js");
 load("ua-tests.js");
 load("settings-tests.js");

@@ -160,11 +160,11 @@ var laggards = [
 ];
 
 current.forEach(function(c) {
-  doh.add("User Agent", "t.f(suchi.isBehind(\n  \"" + c + "\"\n));");
+  doh.add("User Agent", "t.f(suchi.isOld(\n  \"" + c + "\"\n));");
 });
 
 laggards.forEach(function(c) {
-  doh.add("User Agent", "t.t(suchi.isBehind(\n  \"" + c + "\"\n));");
+  doh.add("User Agent", "t.t(suchi.isOld(\n  \"" + c + "\"\n));");
 });
 
 /*
