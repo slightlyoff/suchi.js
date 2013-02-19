@@ -67,17 +67,14 @@
 
     // FF 9-16:  ~3.7%
     // Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:16.0) Gecko/20100101 Firefox/16.0
-    FF_recent: /^Mozilla\/5\.0 \((Windows NT \d\.\d|Macintosh); (.*)rv\:(9|10|11|12|13|14|15|16)\.0(\.\d{1,2})?\) Gecko\/\d{8} Firefox\/(9|10|11|12|13|14|15|16)\.0(\.\d{1,2})?$/g
+    FF_recent: /^Mozilla\/5\.0 \((Windows NT \d\.\d|Macintosh); (.*)rv\:(9|10|11|12|13|14|15|16)\.0(\.\d{1,2})?\) Gecko\/\d{8} Firefox\/(9|10|11|12|13|14|15|16)\.0(\.\d{1,2})?$/g,
 
-    // FIXME(slightlyoff): need to add mobile laggads, but we need to
-    // differentiate by OS in order to offer cogent choices
-    //
-    // Information sources we can mine to make these choices:
-    //    http://developer.android.com/about/dashboards/index.html
-    //      - looks like 2.3 is really the big issue
-    //    http://goo.gl/7yfNy
-    //      -
-    //
+    // FIXME(slightlyoff): should we be handling any iOS detection here?
+    SAF51: /^Mozilla\/5\.0 \((Windows NT \d\.\d|Macintosh)(.*)\) AppleWebKit\/534\.\d{2}(\.\d{1,2})? \(KHTML, like Gecko\) Version\/5\.1\.\d Safari\/534\.\d{2}(\.\d{1,2})?$/g
+
+    // FIXME(slightlyoff): need to add mobile laggards, notably all versions of
+    // the Android Browser and Safari 5.1. Upgrade advice is much trickier here,
+    // though, so perhaps we should surface this through a separate API.
   };
 
   /**

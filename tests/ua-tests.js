@@ -55,6 +55,12 @@ var FF14_WIN7 = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Fir
 var FF15_XP = "Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20100101 Firefox/15.0";
 var FF16_WIN7 = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20100101 Firefox/16.0";
 
+// Safari 5.1
+var SAF51_OSX = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2";
+// Quite the yak-shave to get this one.
+var SAF51_XP = "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2";
+var SAF51_WIN7 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2";
+
 var FF17_WIN7 = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0";
 var FF18_OSX = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:18.0) Gecko/20100101 Firefox/18.0";
 
@@ -130,6 +136,11 @@ var laggards = [
   FF14_WIN7,
   FF15_XP,
   FF16_WIN7,
+
+  // Safari 5.1
+  SAF51_OSX,
+  SAF51_XP,
+  SAF51_WIN7,
 
   // IE 9
   IE9_WIN7,
