@@ -15,6 +15,27 @@ prompting again.
 
 # Sign Me Up! How Do I Use It?
 
+Suchi comes in a couple of "styles": the super-lightweight `isOld.js` for folks
+who are rolling their own prompts, or the full-featured `suchi.js` for a full-
+service prompt. For minified copies of both scripts, see the `build/` directory.
+
+## `isOld.js`
+
+The core of Suchi is a tiny helper function to tell you if a browser is modern
+or ancient. It can be used in a stand-alone way, although is part of the larger
+`suchi.js` outlined below as well:
+
+```html
+<script defer src="//suchijs.org/isOld.min.js"></script>
+<script defer>
+  if ( suchi.isOld(navigator.userAgent) ) {
+    // Do something about it.
+  }
+</script>
+```
+
+## `suchi.js`
+
 It's simple! The following snippet loads and configures `suchi.js`. On the 3rd
 page loaded by an IE7 user of a site with this snippet, they'll see the upgrade
 message.
@@ -35,7 +56,7 @@ message.
     se.src = src;
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(se, s);
-  })("//suchijs.org/suchi.js");
+  })("//suchijs.org/suchi.min.js");
 </script>
 ```
 
