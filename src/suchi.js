@@ -136,7 +136,7 @@
     return options;
   };
 
-  var options = suchi._parseOptions(global["suchiOptions"] || [],
+  var options = suchi._parseOptions(global["suchiConfig"] || [],
                                     defaultOptionList);
 
   // TODO(slightlyoff):
