@@ -97,6 +97,14 @@
     pageviewsTillPrompt: 3,
     rePromptDelay: 4
   };
+  defaultOptionList.onload.test =
+  defaultOptionList.onlagging.test =
+      function(v) { return (v instanceof Function); };
+  /*
+  function(v) {
+    return typeof v == "function";
+  };
+  */
 
   suchi._parseOptions = function(optionsList, defaults) {
     // Merge all of the options based on a prototype of the supported options
@@ -109,7 +117,11 @@
     for (var x = 0; x < optionsList.length; x++) {
       (function(os) {
         for (var name in os) {
-          (function(default_v, default_t, value, value_t) {
+          (function(default_v,
+                    default_t,
+                    value,
+                    value_t) {
+
             if (default_t == "undefined") {
               return;
             }
@@ -119,8 +131,16 @@
               options[name] = value;
               return;
             }
-            if (isArray(default_v) && isArray(value)) {
-              options[name] = options[name].concat(value);
+
+            if (isArray(default_v)) {
+              var optionsValue = options[name].slice(0);
+              var test = (default_v["test"] || function() { return true; });
+              var valueArray = isArray(value) ? value : [ value ];
+
+              for (var y = 0; y < valueArray.length; y++) {
+                if (test(valueArray[y])) { optionsValue.push(valueArray[y]); }
+              }
+              options[name] = optionsValue;
               return;
             }
 

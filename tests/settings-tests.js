@@ -86,6 +86,30 @@ doh.add("Settings parsing", [
     t.is(o.bar, null);
   },
 
+  function arrayOfFunctions(t) {
+    var defaults = {
+      foo: [],
+    };
+    defaults.foo.test = function(v) { return (v instanceof Function); };
+    var o = suchi._parseOptions([
+      {
+        foo: "pardner",
+      },
+      {
+        foo: [ "pardner" ],
+      },
+      {
+        foo: function(v) { return v+1; }
+      },
+      {
+        foo: function(v) { return v+3; }
+      },
+    ], defaults);
+
+    t.is(o.foo.length, 2);
+    t.is(o.foo.reduce(function(r, func) { return func(r); }, 1), 5);
+  },
+
 ]);
 
 })();
