@@ -156,9 +156,17 @@
     return options;
   };
 
-  var options = suchi._parseOptions(global["suchiConfig"] || [],
-                                    defaultOptionList);
-
+  var config, configs = global["suchiConfig"] || [];
+  for(var i=0;i<configs.length;i++){
+    config = suchi._parseOptions([configs[i]], defaultOptionList);
+    if(global.navigator && suchi.isOld(global.navigator.userAgent)){
+      for( var x = 0; x < config.onlagging.length; x++ ){
+        try{
+          config.onlagging[x]();
+        }catch(e){ /* Just don't block others if you do something dumb... */ }
+      }
+    }
+  }
   // TODO(slightlyoff):
   //  * attach to load event and place the promo
   //  * parse and respect the config
