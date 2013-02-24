@@ -21,93 +21,74 @@
 (function() {
 "use strict";
 
-doh.add("Settings parsing", [
+var defaults = {
+  foo: true,
+  bar: false,
+  baz: 0,
+  thud: 1,
+
+  mixedArr: [ true, "thinger" ],
+  stringArr: [ "howdy" ],
+  functionArr: [],
+  emptyArr: [],
+  nullValue: null,
+  stringValue: "howdy",
+};
+defaults.stringArr.test = function(v) { return (typeof v == "string"); };
+defaults.functionArr.test = function(v) { return (v instanceof Function); };
+
+doh.add("Configuration merging", [
+
+  function defaultsAreSane(t) {
+    var o = suchi._mergeOptions({}, defaults);
+    t.is(o.foo, true);
+    t.is(o.bar, false);
+    t.is(o.baz, 0);
+    t.is(o.thud, 1);
+    t.is(o.undef, undefined);
+    t.is(o.nullValue, null);
+  },
 
   function booleans(t) {
-    var defaults = {
-      foo: true,
-      bar: false,
-      baz: 0,
-      thud: 1,
-    };
-    var o = suchi._parseOptions([
-      {
-        foo: true,
-      },
-      {
-        foo: false,
-        bar: true,
-        baz: true,
-      },
-    ], defaults);
+    var o = suchi._mergeOptions({
+      foo: false,
+      bar: true,
+    }, defaults);
 
     t.is(o.foo, false);
     t.is(o.bar, true);
-    t.is(o.baz, 0);
-  },
-
-  function arrays(t) {
-    var defaults = {
-      foo: [ true, "thinger" ],
-      bar: [],
-      baz: null,
-    };
-    var o = suchi._parseOptions([
-      {
-        bar: [ "howdy" ],
-      },
-      {
-        bar: [ "pardner" ],
-        baz: [],
-      },
-    ], defaults);
-
-    t.is(o.foo, [ true, "thinger" ]);
-    t.is(o.bar, [ "howdy", "pardner" ]);
-    t.is(o.baz, null);
   },
 
   function strings(t) {
-    var defaults = {
-      foo: "howdy",
-      bar: null,
-    };
-    var o = suchi._parseOptions([
-      {
-        foo: "pardner",
-      },
-      {
-        foo: [ "pardner" ],
-        bar: ""
-      },
-    ], defaults);
+    var o = suchi._mergeOptions({
+      stringValue: [ "pardner" ],
+      nullValue: ""
+    }, defaults);
 
-    t.is(o.foo, "pardner");
-    t.is(o.bar, null);
+    t.is(o.stringValue, defaults.stringValue);
+    t.is(o.nullValue, null);
   },
 
-  function arrayOfFunctions(t) {
-    var defaults = {
-      foo: [],
-    };
-    defaults.foo.test = function(v) { return (v instanceof Function); };
-    var o = suchi._parseOptions([
-      {
-        foo: "pardner",
-      },
-      {
-        foo: [ "pardner" ],
-      },
-      {
-        foo: function(v) { return v+1; }
-      },
-      {
-        foo: function(v) { return v+3; }
-      },
-    ], defaults);
+  function arrays(t) {
+    var o = suchi._mergeOptions({
+      stringArr: [ "pardner" ]
+    }, defaults);
+    t.is(o.mixedArr, [ true, "thinger" ]);
+    t.is(o.stringArr, [ "howdy", "pardner" ]);
+  },
 
-    t.is(o.foo.length, 2);
-    t.is(o.foo.reduce(function(r, func) { return func(r); }, 1), 5);
+  function typedArrays(t) {
+    var o = suchi._mergeOptions({
+      functionArr: function(v) { return v+1; },
+      stringArr: [ "thinger", "blarg", false, null ],
+    }, defaults);
+
+    t.is(defaults.functionArr.length, 0);
+    t.is(o.functionArr.length, 1);
+    t.is(o.functionArr.reduce(function(r, func) { return func(r); }, 1), 2);
+
+    t.is(defaults.stringArr.length, 1);
+    t.is(o.stringArr.length, 3);
   },
 
 ]);

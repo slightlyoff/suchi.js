@@ -25,6 +25,30 @@
 
   // FIXME: assert here that suchi.isOld exists!
 
+  //
+  // Utility Functions
+  //
+
+  var forEach = (typeof [].forEach == "function") ?
+                  function(a, cb, scope) { return a.forEach(cb, scope); } :
+                  function(a, cb, scope) {
+                    var i = 0, l = a.length || 0;
+                    for(; i < l; ++i){
+                      cb.call(scope||global, a[i], i, a);
+                    }
+                  };
+
+  var isArray = function(o) {
+    return Object.prototype.toString.call(o) == "[object Array]";
+  };
+
+  var ua = (global.navigator) ? global.navigator.userAgent : "";
+
+  //
+  // Maps of upgrade options, (lagging browser) -> (appropriate evergreen set)
+  //
+
+
   var CHROME = "CHROME",
       GCF    = "GCF",
       FF     = "FF",
@@ -79,12 +103,6 @@
   };
   */
 
-  var isArray = function(o) {
-    return Object.prototype.toString.call(o) == "[object Array]";
-  };
-
-  var ua = (global.navigator) ? global.navigator.userAgent : "";
-
   // Handle configuration.
   var defaultOptionList = {
     treatGCFAsLagging: false,
@@ -106,67 +124,65 @@
   };
   */
 
-  suchi._parseOptions = function(optionsList, defaults) {
+  suchi._mergeOptions = function(optionsObject, defaults) {
     // Merge all of the options based on a prototype of the supported options
     // Make an options object that treats "defaults" as its prototype. My
     // kingdom for __proto__!
     var OC = function() {};
-    OC.prototype = defaults;
+    OC.prototype = defaults || {};
     var options = new OC();
 
-    for (var x = 0; x < optionsList.length; x++) {
-      (function(os) {
-        for (var name in os) {
-          (function(default_v,
-                    default_t,
-                    value,
-                    value_t) {
+    // FIXME: log an error here?
+    if (!optionsObject) { return options; }
 
-            if (default_t == "undefined") {
-              return;
-            }
+    for (var name in optionsObject) {
+      (function(default_v,
+                default_t,
+                value,
+                value_t) {
 
-            if ((default_t == "boolean" && value_t == "boolean") ||
-                (default_t == "string"  && value_t == "string")) {
-              options[name] = value;
-              return;
-            }
-
-            if (isArray(default_v)) {
-              var optionsValue = options[name].slice(0);
-              var test = (default_v["test"] || function() { return true; });
-              var valueArray = isArray(value) ? value : [ value ];
-
-              for (var y = 0; y < valueArray.length; y++) {
-                if (test(valueArray[y])) { optionsValue.push(valueArray[y]); }
-              }
-              options[name] = optionsValue;
-              return;
-            }
-
-          })(defaults[name],
-             typeof defaults[name],
-             os[name],
-             typeof os[name]);
+        if (default_t == "undefined") {
+          return;
         }
 
-      })(optionsList[x]);
-    }
+        if ((default_t == "boolean" && value_t == "boolean") ||
+            (default_t == "string"  && value_t == "string")) {
+          options[name] = value;
+          return;
+        }
 
+        if (isArray(default_v)) {
+          var optionsValue = options[name].slice(0);
+          var test = (default_v["test"] || function() { return true; });
+          var valueArray = isArray(value) ? value : [ value ];
+
+          for (var y = 0; y < valueArray.length; y++) {
+            if (test(valueArray[y])) { optionsValue.push(valueArray[y]); }
+          }
+          options[name] = optionsValue;
+          return;
+        }
+
+      })(defaults[name],      typeof defaults[name],
+         optionsObject[name], typeof optionsObject[name]);
+    }
     return options;
   };
 
-  var config, configs = global["suchiConfig"] || [];
-  for(var i=0;i<configs.length;i++){
-    config = suchi._parseOptions([configs[i]], defaultOptionList);
-    if(global.navigator && suchi.isOld(global.navigator.userAgent)){
-      for( var x = 0; x < config.onlagging.length; x++ ){
-        try{
-          config.onlagging[x]();
-        }catch(e){ /* Just don't block others if you do something dumb... */ }
-      }
+  suchi._parseOptions = function(options) {
+    options = suchi._mergeOptions(options, defaultOptionList);
+
+    if (ua && suchi.isOld(ua)) {
+
+      forEach(options.onlagging, function(cb) {
+        try { cb(); } catch(e) { /* squelch */ }
+      });
+
     }
-  }
+  };
+
+  forEach((global["suchiConfig"] || []), suchi._parseOptions);
+
   // TODO(slightlyoff):
   //  * attach to load event and place the promo
   //  * parse and respect the config
