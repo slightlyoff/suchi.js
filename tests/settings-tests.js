@@ -1,7 +1,7 @@
 /**
  * @preserve
  *
- * Copyright 2012:
+ * Copyright 2012-2013:
  *      Alex Russell <slightlyoff@chromium.org>
  *      Frances Berriman <phaeness@gmail.com>
  *
