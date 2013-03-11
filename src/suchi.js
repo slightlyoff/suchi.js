@@ -28,7 +28,6 @@
   //
   // Utility Functions
   //
-
   var forEach = (typeof [].forEach == "function") ?
                   function(a, cb, scope) { return a.forEach(cb, scope); } :
                   function(a, cb, scope) {
@@ -38,64 +37,50 @@
                     }
                   };
 
-  var isArray = function(o) {
-    return Object.prototype.toString.call(o) == "[object Array]";
-  };
-
-  var ua = (global.navigator) ? global.navigator.userAgent : "";
+  var isArray = (typeof Array.isArray == "function") ?
+                  Array.isArray.bind(Array) :
+                  function(o) {
+                    return Object.prototype.toString.call(o) == "[object Array]";
+                  };
 
   //
   // Maps of upgrade options, (lagging browser) -> (appropriate evergreen set)
   //
 
 
-  var CHROME = "CHROME",
-      GCF    = "GCF",
-      FF     = "FF",
-      SAFARI = "SAFARI",
-      IE     = "IE",
-      OPERA  = "OPERA";
+  var CHROME    = "CHROME",
+      GCF       = "GCF",
+      FF        = "FF",
+      SAFARI    = "SAFARI",
+      IE        = "IE",
+      OPERA     = "OPERA",
+      OPERAMINI = "OPERAMINI";
 
+  // FIXME: need to add mobile dead-ends/options here!
+  // Mobile dead-enders that we care about:
+  //  Android Browser
+  //  Safari on devices that won't get updates
+  //    - only evergreen iOS option is a proxy-browser, e.g. Opera Mini
+  // Mobile evergreen options:
+  //  Opera
+  //  Chrome (For ICS+ Android users)
+  //  FF: for ARMv7+ devices (see: http://goo.gl/PhQs9)
+
+  // Our options only really make sense by OS; we don't need to worry about what
+  // browser the users is on once we know they're lagging, we can just present
+  // them with OS-appropriate sets of choices.
   suchi.evergreenOptions = {
-    IE9: {
-      // IE 9 never shipped on XP. More's the pitty.
-      "vista": [     CHROME, FF, GCF, OPERA ],
-      "win7":  [ IE, CHROME, FF, GCF, OPERA ]
-    },
-    IE8: {
-      "xp":    [     CHROME, FF, GCF, OPERA ],
-      "vista": [ IE, CHROME, FF, GCF, OPERA ],
-      "win7":  [ IE, CHROME, FF, GCF, OPERA ]
-    },
-    IE7: {
-      "xp":    [     CHROME, FF, GCF, OPERA ],
-      "vista": [ IE, CHROME, FF, GCF, OPERA ]
-      // Vista was the last OS supported for IE7
-    },
-    IE6: {
-      // Not bothering with 2K or 2K3
-      "xp":    [     CHROME, FF, GCF, OPERA ]
-    }
-    // FIXME: need to add mobile dead-ends/options here!
-    // Mobile dead-enders that we care about:
-    //  Android Browser
-    //  Safari on devices that won't get updates
-    //    - only evergreen iOS option is a proxy-browser, e.g. Opera Mini
-    // Mobile evergreen options:
-    //  Opera
-    //  Chrome (For ICS+ Android users)
-    //  FF: for ARMv7+ devices (see: http://goo.gl/PhQs9)
+    "xp":              [     GCF, CHROME, FF, OPERA ],
+    "vista":           [     GCF, CHROME, FF, OPERA ],
+    "win7":            [ IE, GCF, CHROME, FF, OPERA ],
+    "win8":            [ IE, GCF, CHROME, FF, OPERA ],
+    "leopard":         [  SAFARI, CHROME, FF, OPERA ],
+    "snowleopard":     [  SAFARI, CHROME, FF, OPERA ],
+    "gingerbread":     [                  FF, OPERA ],
+    "ics":             [          CHROME, FF, OPERA ],
+    "jellybean":       [          CHROME, FF, OPERA ],
+    "ios5":            [                  OPERAMINI ]
   };
-
-  var portable = [ "FF36", "CR_recent", "FF_recent" ];
-  for(var x = 0; x < portable.length; x++) {
-    suchi.evergreenOptions[portable[x]] = {
-      "xp":    [     CHROME, FF, OPERA ],
-      "vista": [ IE, CHROME, FF, OPERA ],
-      "win7":  [ IE, CHROME, FF, OPERA ],
-      "osx":   [     CHROME, FF, OPERA ]
-    };
-  }
 
   /*
   suchi.prompts = {
@@ -168,6 +153,8 @@
     }
     return options;
   };
+
+  var ua = (global.navigator) ? global.navigator.userAgent : "";
 
   suchi._parseOptions = function(options) {
     options = suchi._mergeOptions(options, defaultOptionList);

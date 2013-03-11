@@ -170,6 +170,7 @@ var laggards = [
   IE6_XP_NeoPlanet,
 ];
 
+
 current.forEach(function(c) {
   doh.add("User Agent", "t.f(suchi.isOld(\n  \"" + c + "\"\n));");
 });
@@ -178,14 +179,94 @@ laggards.forEach(function(c) {
   doh.add("User Agent", "t.t(suchi.isOld(\n  \"" + c + "\"\n));");
 });
 
-/*
-doh.add("User Agent", [
+var win8 = [
+  IE10_WIN8,
+  CR24_WIN8,
+];
 
-  function options(t) {
-  },
+var win7 = [
+  IE10_generic,
+  IE10_WIN7,
+  FF17_WIN7,
+  FF36_WIN7_crufty,
+  FF10_WIN7,
+  FF11_WIN7,
+  FF12_WIN7,
+  FF14_WIN7,
+  FF16_WIN7,
+  SAF51_WIN7,
+  IE9_WIN7,
+  IE9_WIN72,
+  IE9_WIN7_GCF,
+  IE8_WIN7,
+  IE8_WIN7_MC,
+  IE8_WIN7_crufty,
+];
 
-]);
-*/
+var winVista = [
+  CR18_VISTA,
+  FF36_VISTA,
+  IE8_WIN_VISTA,
+  IE7_VISTA,
+];
 
+var winXP = [
+  CR17_XP,
+  FF13_XP,
+  FF15_XP,
+  SAF51_XP,
+  IE8_WIN_XP_64,
+  IE8_WIN_XP,
+  IE8_WIN_XP_crufty,
+  IE7_WIN_XP,
+  IE7_WIN_XP_Avant,
+  IE7_WIN_XP_Toolbar,
+  IE6_XP,
+  IE6_XP_SP2,
+  IE6_WIN_XP_64,
+  IE6_XP_NeoPlanet,
+  IE7_WIN2K3,
+];
+
+var snowLeopard = [
+  FF36_OSX,
+  SAF51_OSX,
+];
+
+var lion = [
+  FF13_OSX,
+  CR18_OSX,
+  CR17_OSX,
+];
+
+var mountainLion = [
+  CR24_OSX,
+  FF18_OSX,
+  FF10_OSX,
+];
+
+win8.forEach(function(c) {
+  doh.add("User Agent", "t.is(\"win8\", suchi.fingerprintOS(\n  \"" + c + "\"\n));");
+});
+
+win7.forEach(function(c) {
+  doh.add("User Agent", "t.is(\"win7\", suchi.fingerprintOS(\n  \"" + c + "\"\n));");
+});
+
+winVista.forEach(function(c) {
+  doh.add("User Agent", "t.is(\"vista\", suchi.fingerprintOS(\n  \"" + c + "\"\n));");
+});
+
+snowLeopard.forEach(function(c) {
+  doh.add("User Agent", "t.is(\"snowleopard\", suchi.fingerprintOS(\n  \"" + c + "\"\n));");
+});
+
+lion.forEach(function(c) {
+  doh.add("User Agent", "t.is(\"lion\", suchi.fingerprintOS(\n  \"" + c + "\"\n));");
+});
+
+mountainLion.forEach(function(c) {
+  doh.add("User Agent", "t.is(\"mountainlion\", suchi.fingerprintOS(\n  \"" + c + "\"\n));");
+});
 })();
 
