@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+// Copyright 2012-2013:
+//
+//      Alex Russell <slightlyoff@chromium.org>
+//      Frances Berriman <phaeness@gmail.com>
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+-->
+
+<html>
+  <head>
+    <title>Future Tests</title>
+    <meta charset="utf-8">
+    <script src="../util/doh/runner_async.js"></script>
+    <script>
+      var append = function(n, h) { (h||document.body).appendChild(n); return n; };
+      var t = function(text) { return document.createTextNode(text); };
+      var el = function(type, html, text) {
+        var node = document.createElement(type);
+        if (html) { node.innerHTML = html; }
+        if (text) { node.appendChild(t(text)); }
+        return node;
+      };
+
+      var domLog = function() {
+        var al = arguments.length;
+        var pre = append(el("pre"));
+        for(var x = 0; x < al; x++) {
+          append(t(arguments[x]), pre);
+          append(t("\n"), pre);
+        }
+      };
+
+      doh.squelch = false;
+      var printLog = [];
+      doh._print = function(s) { printLog.push(s); }
+      doh._report = (function(r) {
+        return function() {
+          r.call(doh);
+          append(el("pre", printLog.join("\n")));
+          printLog.length = 0;
+        }
+      })(doh._report);
+    </script>
+    <script src="../src/isOld.js"></script>
+    <script src="../src/suchi.js"></script>
+    <script src="ua-tests.js"></script>
+    <script src="settings-tests.js"></script>
+    <script>doh.run();</script>
+  </head>
+  <body>
+    <h1>DOMFuture Tests</h1>
+  </body>
+</html>

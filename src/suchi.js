@@ -24,6 +24,18 @@
   var suchi = global.suchi = global.suchi || {};
 
   // FIXME: assert here that suchi.isOld exists!
+  if ((typeof suchi.isOld != "function") ||
+      (typeof suchi.fingerprintOS != "function")) {
+    // isOld.js hasn't been loaded up front, leaving us unable to continue
+    if (typeof global.console != "undefined") {
+      console.log("suchi.js has been loaded without isOld.js. To correct " +
+        "this error, either include isOld.js in your document before suchi.js "+
+        "or ensure that you are using the correct suchi.min.js for your locale."
+      );
+    }
+    // Bail.
+    return;
+  }
 
   //
   // Utility Functions
@@ -162,7 +174,10 @@
     if (ua && suchi.isOld(ua)) {
 
       forEach(options.onlagging, function(cb) {
-        try { cb(); } catch(e) { /* squelch */ }
+        try {
+          // Send along a list of evergreen browsers for the current platform
+          cb(suchi.evergreenOptions[suchi.fingerprintOS(ua)]||[]);
+        } catch(e) { /* squelch */ }
       });
 
     }
