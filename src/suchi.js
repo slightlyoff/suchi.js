@@ -24,8 +24,7 @@
   var suchi = global.suchi = global.suchi || {};
 
   // FIXME: assert here that suchi.isOld exists!
-  if ((typeof suchi.isOld != "function") ||
-      (typeof suchi.fingerprintOS != "function")) {
+  if (typeof suchi.isOld != "function") {
     // isOld.js hasn't been loaded up front, leaving us unable to continue
     if (typeof global.console != "undefined") {
       console.log("suchi.js has been loaded without isOld.js. To correct " +
@@ -55,10 +54,52 @@
                     return Object.prototype.toString.call(o) == "[object Array]";
                   };
 
-  //
-  // Maps of upgrade options, (lagging browser) -> (appropriate evergreen set)
-  //
+  var ua = (global.navigator) ? global.navigator.userAgent : "";
 
+  suchi.fingerprintOS = function(ua) {
+    /*
+    TODO:
+      return "gingerbread";
+      return "ics";
+      return "jellyben;";
+      return "ios5";
+    */
+    if (ua.indexOf("Windows NT 6.2") >= 0) {
+      return "win8";
+    }
+    if (ua.indexOf("Windows NT 6.1") >= 0) {
+      return "win7";
+    }
+    if (ua.indexOf("Windows NT 6.0") >= 0) {
+      return "vista";
+    }
+    // For the sake of brevity we're treating WinXP/32, WinXP/64, and Windows
+    // Server 2003 as "xp".
+    if (ua.indexOf("Windows NT 5.2") >= 0 ||
+        ua.indexOf("Windows NT 5.1") >= 0) {
+      return "xp";
+    }
+    if (ua.indexOf("Windows NT 6.0") >= 0) {
+      return "vista";
+    }
+
+    // 10.6
+    if (ua.match(/Mac OS X 10[_.]6([_.]\d)*/)) {
+      return "snowleopard";
+    }
+    // 10.7
+    if (ua.match(/Mac OS X 10[_.]7([_.]\d)*/)) {
+      return "lion";
+    }
+    // 10.8
+    if (ua.match(/Mac OS X 10[_.]8([_.]\d)*/)) {
+      return "mountainlion";
+    }
+  };
+
+  //
+  // Maps of upgrade options, (platform) -> (evergreen set)
+  //
 
   var CHROME    = "CHROME",
       GCF       = "GCF",
@@ -93,12 +134,6 @@
     "jellybean":       [          CHROME, FF, OPERA ],
     "ios5":            [                  OPERAMINI ]
   };
-
-  /*
-  suchi.prompts = {
-
-  };
-  */
 
   // Handle configuration.
   var defaultOptionList = {
@@ -165,8 +200,6 @@
     }
     return options;
   };
-
-  var ua = (global.navigator) ? global.navigator.userAgent : "";
 
   suchi._parseOptions = function(options) {
     options = suchi._mergeOptions(options, defaultOptionList);

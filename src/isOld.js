@@ -93,46 +93,4 @@
     }
     return false;
   };
-
-  suchi.fingerprintOS = function(ua) {
-    /*
-    TODO:
-      return "gingerbread";
-      return "ics";
-      return "jellyben;";
-      return "ios5";
-    */
-    if (ua.indexOf("Windows NT 6.2") >= 0) {
-      return "win8";
-    }
-    if (ua.indexOf("Windows NT 6.1") >= 0) {
-      return "win7";
-    }
-    if (ua.indexOf("Windows NT 6.0") >= 0) {
-      return "vista";
-    }
-    // For the sake of brevity we're treating WinXP/32, WinXP/64, and Windows
-    // Server 2003 as "xp".
-    if (ua.indexOf("Windows NT 5.2") >= 0 ||
-        ua.indexOf("Windows NT 5.1") >= 0) {
-      return "xp";
-    }
-    if (ua.indexOf("Windows NT 6.0") >= 0) {
-      return "vista";
-    }
-
-    // 10.6
-    if (ua.match(/Mac OS X 10[_.]6([_.]\d)*/)) {
-      return "snowleopard";
-    }
-    // 10.7
-    if (ua.match(/Mac OS X 10[_.]7([_.]\d)*/)) {
-      return "lion";
-    }
-    // 10.8
-    if (ua.match(/Mac OS X 10[_.]8([_.]\d)*/)) {
-      return "mountainlion";
-    }
-
-  };
 })(this);
