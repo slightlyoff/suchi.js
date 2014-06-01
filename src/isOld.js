@@ -41,36 +41,59 @@
    * of userbase at the time of writing.
    */
   suchi.laggards = {
-    // IE 9:     17%
-    // Mozilla/5.0 (Windows; U; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)
-    // IE9: /^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d(.*); Trident\/5\.0(.*)\)$/g,
-    IE9: /^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d(.*)\)$/g,
-
-    // IE 8:     11%
-    // IE8: /^Mozilla\/4\.0 \(compatible; MSIE 8\.0; Windows NT \d\.\d;(.*)? Trident\/4\.0(;)?(.*)\)$/g,
-    IE8: /^Mozilla\/4\.0 \(compatible; MSIE 8\.0; Windows NT \d\.\d(.*)\)$/g,
+    // IE 6:      ?%
+    IE6: /^Mozilla\/4\.0 \(compatible; MSIE 6\.0; Windows NT \d\.\d(.*)\)$/g,
 
     // IE 7:      ?%
     // FIXME: test for Trident version #
     IE7: /^Mozilla\/4\.0 \(compatible; MSIE 7\.0; Windows NT \d\.\d(.*)\)$/g,
 
-    // IE 6:      ?%
-    // FIXME: test for Trident version #
-    IE6: /^Mozilla\/4\.0 \(compatible; MSIE 6\.0; Windows NT \d\.\d(.*)\)$/g,
+    // IE 8:     11%
+    IE8: /^Mozilla\/4\.0 \(compatible; MSIE 8\.0; Windows NT \d\.\d;(.*)? Trident\/4\.0(;)?(.*)\)$/g,
+
+    // IE 9:     17%
+    IE9: /^Mozilla\/5\.0 \(compatible; MSIE 9\.0; Windows NT \d\.\d(.*); Trident\/5\.0(.*)\)$/g,
 
     // FF 3.6:    0.X%
     // Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6;en-US; rv:1.9.2.9) Gecko/20100824 Firefox/3.6.9
     FF36: /^Mozilla\/5\.0 \((Windows|Macintosh); U;(.*)rv\:1\.9\.2.(\d{1,2})\)( Gecko\/(\d{8}))? Firefox\/3\.6(\.\d{1,2})?( \(.+\))?$/g,
 
-    // Chrome 16-23: ~1.2%
-    CR_recent: /^Mozilla\/5\.0 \((Windows NT|Macintosh)(;)?( .*)\) AppleWebKit\/53\d\.\d{1,2} \(KHTML, like Gecko\) Chrome\/(16|17|18|19|20|21|22|23)\.0\.\d{3,4}\.\d{1,2} Safari\/53\d\.\d{1,2}$/g,
+    // FIXME(slightlyoff)
+    /*
+    FF10: ,
+    FF11: ,
+    FF12: ,
+    FF13: ,
+    FF28: ,
+    */
+
+    // Chrome 16-34: ~1.2%
+
+    //   "Mozilla/5.0 (X11; Linux x8664) AppleWebKit/537.36 (KHTML like Gecko) Chrome/33.0.1750.152 Safari/537.36"
+    //   "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 5 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36"
+    CR_recent: /^Mozilla\/5\.0 \((Windows NT|Macintosh|X11|(Linux; Android \d\.\d\.\d))(;)?( .*)\) AppleWebKit\/53\d\.\d{1,2} \(KHTML(,)? like Gecko\) Chrome\/(16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34)\.0\.\d{3,4}\.\d{1,3} (Mobile )?Safari\/53\d\.\d{1,2}$/g,
 
     // FF 9-16:  ~3.7%
     // Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:16.0) Gecko/20100101 Firefox/16.0
-    FF_recent: /^Mozilla\/5\.0 \((Windows NT \d\.\d|Macintosh); (.*)rv\:(9|10|11|12|13|14|15|16)\.0(\.\d{1,2})?\) Gecko\/\d{8} Firefox\/(9|10|11|12|13|14|15|16)\.0(\.\d{1,2})?$/g,
+    FF_recent: /^Mozilla\/5\.0 \((Windows NT \d\.\d|Macintosh|Android|X11); (.*)rv\:(9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28)\.0(\.\d{1,2})?\) Gecko\/(\d{8}|(\d{2}\.0)) Firefox\/(9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28)\.0(\.\d{1,2})?$/g,
 
     // FIXME(slightlyoff): should we be handling any iOS detection here?
-    SAF51: /^Mozilla\/5\.0 \((Windows NT \d\.\d|Macintosh)(.*)\) AppleWebKit\/534\.\d{2}(\.\d{1,2})? \(KHTML, like Gecko\) Version\/5\.1\.\d Safari\/534\.\d{2}(\.\d{1,2})?$/g
+    SAF51: /^Mozilla\/5\.0 \((Windows NT \d\.\d|Macintosh)(.*)\) AppleWebKit\/534\.\d{2}(\.\d{1,2})? \(KHTML, like Gecko\) Version\/5\.1\.\d Safari\/534\.\d{2}(\.\d{1,2})?$/g,
+
+
+    // FIXME(slightlyoff): Safari 6.0 detection is still busted. Needs stronger regex.
+    // SAF60: /^Mozilla\/5\.0 \((iPhone|iPad|Macintosh)(.*)\) AppleWebKit\/536\.\d{2}(\.\d{1,2})? \(KHTML like Gecko\) Version\/6\.0\.\d ((Mobile\/\d{2}\w\d{3} ){0,1})Safari\/\d{2,4}\.\d{2}(\.\d{1,2})?$/g,
+
+    // "Mozilla/5.0 (iPhone; CPU iPhone OS 614 like Mac OS X) AppleWebKit/536.26 (KHTML like Gecko) Version/6.0 Mobile/10B350 Safari/8536.25"
+    // "Mozilla/5.0 (iPhone; CPU iPhone OS 613 like Mac OS X) AppleWebKit/536.26 (KHTML like Gecko) Version/6.1 Mobile/10B329 Safari/8536.25"
+    //  "Mozilla/5.0 (iPad; CPU OS 613 like Mac OS X) AppleWebKit/536.26 (KHTML like Gecko) Mobile/10B329 Version/6.1 Safari/8536.25"
+    SAF60: /^Mozilla\/5\.0 \((iPhone|iPad|Macintosh);( .*)\)( .*)Version\/6\.0(\.\d)?( .*)$/g,
+
+
+    // TODO: Safari 6.1
+
+    // Android browser
+    ANDROID_WEBKIT: /^Mozilla\/5\.0 \(Linux;( U;)? Android 4\.(0|1|2|3|4)(\.\d)?; (.*)?\) \w{2}\-\w{2}; (.*)\) AppleWebKit\/5\d{2}.\d{2} \(KHTML like Gecko\) Version\/4\.\d Mobile Safari\/\d{3}\.\d{2}$/g,
 
     // FIXME(slightlyoff): need to add mobile laggards, notably all versions of
     // the Android Browser and Safari 5.1. Upgrade advice is much trickier here,
