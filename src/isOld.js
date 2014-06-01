@@ -81,23 +81,12 @@
     SAF51: /^Mozilla\/5\.0 \((Windows NT \d\.\d|Macintosh)(.*)\) AppleWebKit\/534\.\d{2}(\.\d{1,2})? \(KHTML, like Gecko\) Version\/5\.1\.\d Safari\/534\.\d{2}(\.\d{1,2})?$/g,
 
 
-    // FIXME(slightlyoff): Safari 6.0 detection is still busted. Needs stronger regex.
-    // SAF60: /^Mozilla\/5\.0 \((iPhone|iPad|Macintosh)(.*)\) AppleWebKit\/536\.\d{2}(\.\d{1,2})? \(KHTML like Gecko\) Version\/6\.0\.\d ((Mobile\/\d{2}\w\d{3} ){0,1})Safari\/\d{2,4}\.\d{2}(\.\d{1,2})?$/g,
-
-    // "Mozilla/5.0 (iPhone; CPU iPhone OS 614 like Mac OS X) AppleWebKit/536.26 (KHTML like Gecko) Version/6.0 Mobile/10B350 Safari/8536.25"
-    // "Mozilla/5.0 (iPhone; CPU iPhone OS 613 like Mac OS X) AppleWebKit/536.26 (KHTML like Gecko) Version/6.1 Mobile/10B329 Safari/8536.25"
-    //  "Mozilla/5.0 (iPad; CPU OS 613 like Mac OS X) AppleWebKit/536.26 (KHTML like Gecko) Mobile/10B329 Version/6.1 Safari/8536.25"
-    SAF60: /^Mozilla\/5\.0 \((iPhone|iPad|Macintosh);( .*)\)( .*)Version\/6\.0(\.\d)?( .*)$/g,
-
+    SAF60: /^Mozilla\/5\.0 \((iPhone|iPad|Macintosh);(.*)\) AppleWebKit\/536\.\d{2}(\.\d{1,2})? \(KHTML like Gecko\) Version\/6\.0(\.\d)? ((Mobile\/\d{2}\w\d{3} )?)Safari\/\d{2,4}\.\d{2}(\.\d{1,2})?$/g,
 
     // TODO: Safari 6.1
 
     // Android browser
     ANDROID_WEBKIT: /^Mozilla\/5\.0 \(Linux;( U;)? Android 4\.(0|1|2|3|4)(\.\d)?; (.*)?\) \w{2}\-\w{2}; (.*)\) AppleWebKit\/5\d{2}.\d{2} \(KHTML like Gecko\) Version\/4\.\d Mobile Safari\/\d{3}\.\d{2}$/g,
-
-    // FIXME(slightlyoff): need to add mobile laggards, notably all versions of
-    // the Android Browser and Safari 5.1. Upgrade advice is much trickier here,
-    // though, so perhaps we should surface this through a separate API.
   };
 
   /**
